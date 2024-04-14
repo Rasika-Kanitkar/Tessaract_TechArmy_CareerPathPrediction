@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Path Prediction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" integrity="sha512-KoZboGGUuXK9oXIRuqu3MMTRfwnE5lAF6PDJtcAoyL0A/VWfWskR14O/5u/rVy2KlnJq+oFRAyg5p5Kmc0v0bA==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js" integrity="sha512-n76CNLgxL+6WHG5JqR/jw06F4guV9nqB8ssmTjcmrtP65FHcTGJ7R+pybSM66jOsGZdfy3w+Qbn+Os51dNYc3A==" crossorigin="anonymous"></script>
+    <style>
+        /* CSS styles */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        body {
+            background-color: #a5c1d7;
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            font-weight: 100;
+            font-style: normal;
+            overflow-y: auto; /* Allows vertical scrolling */
+        }
+
+        /* Add margins from top and bottom */
+.container {
+    max-width: 800px;
+    padding: 20px;
+    margin: 40px auto; /* Adds 40px margin on top and bottom */
+    background-color: rgb(255, 255, 255); /* Adds a white background to the container */
+    border-radius: 10px; /* Adds rounded corners */
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    
+    /* Blur effect */
+    backdrop-filter: blur(18px); /* Adds a blur effect */
+}
+
+
+        .heading {
+            margin-top: 10px;
+            color: #0f1d28;
+            font-weight: bold;
+            font-size: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .decoration {
+            margin: 15px 0;
+            padding: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px; /* Adds spacing between label and input */
+        }
+
+        input[type="range"],
+        select {
+            width: 100%; /* Sets the width to 100% of the container */
+            padding: 8px; /* Adds padding to inputs */
+            border-radius: 4px; /* Adds rounded corners */
+            border: 1px solid #ccc; /* Adds a border */
+            margin-bottom: 10px;
+
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #314587;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        select option:checked {
+    font-weight: bold; /* Bold weight for selected option */
+        }
+        input[type="submit"]:hover {
+            background-color: #4c5fae;
+        }
+
+        .pred-container {
+    max-width: 800px;
+    padding: 20px;
+    margin: 40px auto; /* Adds 40px margin on top and bottom */
+    background-color: #191919; /* Adds a white background to the container */
+    border-radius: 10px; /* Adds rounded corners */
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    
+    /* Blur effect */
+    backdrop-filter: blur(18px); /* Adds a blur effect */
+}
+
+.logout button{
+    display: inline;
+    width: auto;
+    margin-left: 90%;
+    margin-top: 10px;
+    width : 80px;
+    height: auto;
+    padding : 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: #3452b3;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    font-style: bold;
+    color: white;
+}
+    </style>
+</head>
+
+<body>
+    <div class="logout">
+        <form method="POST" action="/logout">
+            <button type="submit">Log out</button>
+         </form>
+       </div>
+
+    {% if pred %}
+    <div class="pred-container">
+        
+        <p><h4 style="color: rgba(255, 251, 9, 0.792);"><b>Predicted Career is : </b></h4><h4 style="color: white; font-size: larger;"><b>{{pred}}</b></h4></p>
+
+    </div>
+    {% else %}
+    <div class="pred-container">
+        <p><h4 style="color: white; display: inline;"><b>Hello!!!</b></h4><h4 style="color: rgb(249, 148, 16); font-size: larger;"><b>{{Name}}</b></h4></p>
+    </div>
+
+    {% endif %}
+
+   
+    
+
+    <div class="container">
+        
+        <div class="heading">
+            <h2>Career Path Prediction</h2>
+        </div>
+        
+        <div>
+            <form id="careerForm" method="post">
+                
+                <div class="decoration">
+                    <label for="logicalSkills">Rate yourself in logical skills</label>
+                    <input type="range" id="Logical quotient rating" name="Logical quotient rating" min="0" max="10" step="1" value="5"  oninput="logicalSkillsValue.value=this.value">
+                    <output for="logicalSkills" id="logicalSkillsValue" style="font-weight: bold;">5</output>
+                </div>
+                
+                <div class="decoration">
+                    <label for="hackathons">Hackathons participated in</label>
+                    <input type="range" id="hackathons" name="hackathons" min="0" max="10" step="1" value="5" oninput="hackathonsValue.value=this.value">
+                    <output for="hackathons" id="hackathonsValue" style="font-weight: bold;">5</output>
+                </div>
+
+                <div class="decoration">
+                    <label for="codingSkills">Rate yourself in coding skills</label>
+                    <input type="range" id="coding skills rating" name="coding skills rating" min="0" max="10" step="1" value="5" oninput="codingSkillsValue.value=this.value">
+                    <output for="codingSkills" id="codingSkillsValue" style="font-weight: bold;">5</output>
+                </div>
+
+                <div class="decoration">
+                    <label for="publicSpeaking">Rate yourself in public speaking</label>
+                    <input type="range" id="public speaking points" name="public speaking points" min="0" max="10" step="1" value="5" oninput="publicSpeakingValue.value=this.value">
+                    <output for="publicSpeaking" id="publicSpeakingValue" style="font-weight: bold;">5</output>
+                </div>
+
+                <div class="decoration">
+                    <label for="selfLearning">Are you capable of self-learning?</label>
+                    <select id="self-learning capability?" name="self-learning capability?">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="decoration">
+                    <label for="extraCourses">Extra courses taken</label>
+                    <select id="Extra-courses did" name="Extra-courses did">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="decoration">
+                    <label for="readingAndWritingSkills">Rate your reading and writing skills</label>
+                    <select id="reading and writing skills" name="reading and writing skills">
+                        <option value="poor">Poor</option>
+                        <option value="medium">Medium</option>
+                        <option value="excellent">Excellent</option>
+                    </select>
+                </div>
+
+                <div class="decoration">
+                    <label for="memoryCapabilityScore">Rate your memory capability score</label>
+                    <select id="memory capability score" name="memory capability score">
+                        <option value="poor">Poor</option>
+                        <option value="medium">Medium</option>
+                        <option value="excellent">Excellent</option>
+                    </select>
+                </div>
+
+                <div class="decoration">
+                    <label for="seniorInput">Taken input from seniors</label>
+                    <select id="Taken inputs from seniors or elders" name="Taken inputs from seniors or elders">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="decoration">
+                    <label for="teamCoordination">Do you possess team coordination skills?</label>
+                    <select id="worked in teams ever?" name="worked in teams ever?">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="decoration">
+                    <label for="introvertism">Are you an introvert?</label>
+                    <select id="Introvert" name="Introvert">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="submit-button">
+                    <input type="submit" value="Submit">
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
+    
+
+    <!-- Ion Range Slider initialization -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize Ion Range Slider for each range input
+            const sliders = document.querySelectorAll('input[type="range"]');
+            sliders.forEach(function(slider) {
+                $(slider).ionRangeSlider({
+                    min: 0,
+                    max: 10,
+                    step: 1,
+                    onChange: function(data) {
+                        const output = document.querySelector(`output[for="${slider.id}"]`);
+                        output.value = data.from;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
